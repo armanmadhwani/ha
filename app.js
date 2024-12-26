@@ -12,61 +12,55 @@ document.addEventListener('DOMContentLoaded', () => {
     // Remove the loading screen after 3 seconds
     setTimeout(removeLoadingScreen, 3000);
 
-    // 3D Molecule Model using Three.js
+    // 3D Background using Three.js
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
 
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById('3d-viewer').appendChild(renderer.domElement);
+    document.body.appendChild(renderer.domElement);
 
-    // Add lighting
-    const ambientLight = new THREE.AmbientLight(0x404040, 2);
-    scene.add(ambientLight);
+    // Particle settings
+    const particles = new THREE.BufferGeometry();
+    const particleCount = 5000;
+    const positions = new Float32Array(particleCount * 3);
 
-    const pointLight = new THREE.PointLight(0xffffff, 1);
-    pointLight.position.set(5, 5, 5);
-    scene.add(pointLight);
-
-    // Create molecule structure
-    const atoms = [];
-    const atomGeometry = new THREE.SphereGeometry(0.3, 32, 32);
-    const bondGeometry = new THREE.CylinderGeometry(0.05, 0.05, 1, 32);
-
-    const atomMaterial1 = new THREE.MeshStandardMaterial({ color: 0x007bff });
-    const atomMaterial2 = new THREE.MeshStandardMaterial({ color: 0xff5733 });
-    const bondMaterial = new THREE.MeshStandardMaterial({ color: 0xaaaaaa });
-
-    // Central atom
-    const atom1 = new THREE.Mesh(atomGeometry, atomMaterial1);
-    scene.add(atom1);
-    atoms.push(atom1);
-
-    // Surrounding atoms and bonds
-    for (let i = 0; i < 4; i++) {
-        const angle = i * (Math.PI / 2);
-        const x = Math.cos(angle) * 1.5;
-        const y = Math.sin(angle) * 1.5;
-        const atom = new THREE.Mesh(atomGeometry, atomMaterial2);
-        atom.position.set(x, y, 0);
-        scene.add(atom);
-        atoms.push(atom);
-
-        const bond = new THREE.Mesh(bondGeometry, bondMaterial);
-        bond.position.set(x / 2, y / 2, 0);
-        bond.lookAt(atom1.position);
-        scene.add(bond);
+    for (let i = 0; i < particleCount; i++) {
+        positions[i * 3] = (Math.random() * 2 - 1) * 100;
+        positions[i * 3 + 1] = (Math.random() * 2 - 1) * 100;
+        positions[i * 3 + 2] = (Math.random() * 2 - 1) * 100;
     }
 
-    camera.position.z = 5;
+    particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const particleMaterial = new THREE.PointsMaterial({
+        color: 0x888888,
+        size: 0.5,
+        transparent: true,
+        opacity: 0.75
+    });
+
+    const particleSystem = new THREE.Points(particles, particleMaterial);
+    scene.add(particleSystem);
+
+    camera.position.z = 50;
+
+    // Mouse interaction
+    const mouse = { x: 0, y: 0 };
+    document.addEventListener('mousemove', (event) => {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    });
 
     // Animation function
     function animate() {
         requestAnimationFrame(animate);
-        atoms.forEach(atom => {
-            atom.rotation.y += 0.01;
-            atom.rotation.x += 0.01;
-        });
+        particleSystem.rotation.y += 0.002;
+        particleSystem.rotation.x += 0.002;
+
+        particleSystem.position.x += (mouse.x * 0.1 - particleSystem.position.x) * 0.05;
+        particleSystem.position.y += (mouse.y * 0.1 - particleSystem.position.y) * 0.05;
+
         renderer.render(scene, camera);
     }
 
