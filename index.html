@@ -3,59 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harmony Additives</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <title>Flux Media</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+        }
+
+        .logo {
+            position: absolute;
+            top: 2vh;
+            left: 2vw;
+            font-size: 2em;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 4em;
+            height: 4em;
+        }
+
+        .video-container {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            width: 90vw;
+            max-width: 1200px;
+            height: 60vh;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 1.5em;
+                top: 5vh;
+                left: 5vw;
+            }
+
+            .logo img {
+                width: 3em;
+                height: 3em;
+            }
+
+            .video-container {
+                width: 95vw;
+                height: 50vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2em;
+                top: 5vh;
+                left: 5vw;
+            }
+
+            .logo img {
+                width: 2.5em;
+                height: 2.5em;
+            }
+
+            .video-container {
+                width: 98vw;
+                height: 45vh;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div id="loading">
-        <div class="flask">
-            <div class="bubbles">
-                <span></span><span></span><span></span><span></span>
-            </div>
-        </div>
+
+    <div class="logo">
+        <img src="https://via.placeholder.com/40" alt="Flux Logo">
+        <span>FLUX MEDIA</span>
     </div>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#products">Products</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main id="home">
-        <div id="intro">
-            <h1>Welcome to Harmony Additives</h1>
-            <p>Innovating the future of materials</p>
-        </div>
-        <div id="3d-viewer"></div>
-    </main>
-    <section id="products">
-        <h2>Our Products</h2>
-        <div class="product-grid">
-            <!-- Product details with interactive 3D models here -->
-        </div>
-    </section>
-    <section id="about">
-        <h2>About Us</h2>
-        <p>Harmony Additives is a leader in innovative material solutions...</p>
-    </section>
-    <section id="contact">
-        <h2>Contact Us</h2>
-        <form>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" required></textarea>
-            <button type="submit">Send</button>
-        </form>
-    </section>
-    <script src="app.js"></script>
+
+    <div class="video-container">
+        <video controls>
+            <source src="your-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
 </body>
 </html>
