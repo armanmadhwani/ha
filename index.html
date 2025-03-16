@@ -5,28 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flux Media</title>
     <style>
+        /* Reset & Full Centering */
         body {
             margin: 0;
             padding: 0;
             background-color: black;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
             font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            text-align: center;
         }
 
+        /* Centered Logo */
         .logo {
-            position: absolute;
-            top: 2vh;
-            left: 2vw;
+            position: relative;
             font-size: 2em;
             color: white;
             font-weight: bold;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
         }
 
         .logo img {
@@ -34,27 +39,69 @@
             height: 4em;
         }
 
-        .video-container {
+        /* Centered Containers */
+        .video-container, .second-video, .image-container {
             background-color: white;
             border-radius: 15px;
             overflow: hidden;
-            width: 43.2vw; /* 80% of 54vw */
-            height: 54.6vh; /* 70% of 78vh */
+            width: 43.2vw;
+            height: 54.6vh;
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease-in-out forwards;
         }
 
-        video {
+        video, img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        /* Centering Portrait Videos */
+        .portrait-videos {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            width: 80%;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s ease-in-out forwards;
+        }
+
+        .portrait-videos video {
+            width: 19%;
+            height: 50vh;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Hover Effect */
+        video:hover {
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .logo {
                 font-size: 1.5em;
-                top: 5vh;
-                left: 5vw;
+                margin-top: 10px;
             }
 
             .logo img {
@@ -62,17 +109,25 @@
                 height: 3em;
             }
 
-            .video-container {
-                width: 45.6vw; /* 80% of 57vw */
-                height: 45.5vh; /* 70% of 65vh */
+            .video-container, .second-video, .image-container {
+                width: 60vw;
+                height: 50vh;
+            }
+
+            .portrait-videos {
+                justify-content: center;
+            }
+
+            .portrait-videos video {
+                width: 45%;
+                height: 40vh;
             }
         }
 
         @media (max-width: 480px) {
             .logo {
                 font-size: 1.2em;
-                top: 5vh;
-                left: 5vw;
+                margin-top: 5px;
             }
 
             .logo img {
@@ -80,9 +135,20 @@
                 height: 2.5em;
             }
 
-            .video-container {
-                width: 46.4vw; /* 80% of 58vw */
-                height: 41.3vh; /* 70% of 59vh */
+            .video-container, .second-video, .image-container {
+                width: 90%;
+                height: 40vh;
+            }
+
+            .portrait-videos {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .portrait-videos video {
+                width: 90%;
+                height: 35vh;
             }
         }
     </style>
@@ -94,9 +160,43 @@
         <span>FLUX MEDIA</span>
     </div>
 
+    <!-- First Video Section -->
     <div class="video-container">
-        <video controls>
+        <video controls preload="metadata" poster="thumbnail1.webp" loading="lazy">
             <source src="your-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Image Section -->
+    <div class="image-container">
+        <img src="your-image.webp" alt="Flux Media Image" loading="lazy">
+    </div>
+
+    <!-- Second Video Section -->
+    <div class="second-video">
+        <video controls preload="metadata" poster="thumbnail2.webp" loading="lazy">
+            <source src="your-second-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Four Portrait Videos -->
+    <div class="portrait-videos">
+        <video controls preload="metadata" poster="thumb1.webp" loading="lazy">
+            <source src="video1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video controls preload="metadata" poster="thumb2.webp" loading="lazy">
+            <source src="video2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video controls preload="metadata" poster="thumb3.webp" loading="lazy">
+            <source src="video3.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <video controls preload="metadata" poster="thumb4.webp" loading="lazy">
+            <source src="video4.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
     </div>
